@@ -44,7 +44,7 @@ async def main():
           print(f"[+] Checking Schedule for: {dev.name}")
           await dev.async_update()
           if dev.name not in schedule.keys():
-            print(f'[-] Device {dev.name} not in schedule')
+            logging.info(f'[-] Device {dev.name} not in schedule')
             continue
 
           s = schedule[dev.name]
@@ -54,13 +54,16 @@ async def main():
             now = datetime.now()
             start = now.replace(hour=window[0].hour, minute=window[0].minute)
             end = now.replace(hour=window[1].hour, minute=window[1].minute)
-            print(f"Time now: {now}\tSchedule Start: {start}\t Schedule End: {end}")
+
+            logging.info(f"Time now: {now}\tSchedule Start: {start}\t Schedule End: {end}")
+
             if now > start and now < end:
-              print(f"[+] Turning {dev.name} on")
+              logging.info(f"[+] Turning {dev.name} on")
               await dev.async_turn_on(channel=0)
               break
 
-            print(f"[-] Turning {dev.name} off")
+            logging.info(f"[-] Turning {dev.name} off")
+
             await dev.async_turn_off(channel=0)
 
 
@@ -87,8 +90,6 @@ def cli(config):
 
     for k, _ in schedule.items():
       schedule[k] = [(tparse(v[0]), tparse(v[1]) ) for v in schedule[k]]
-
-    print(schedule)
 
     # On Windows + Python 3.8, you should uncomment the following
     # asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
