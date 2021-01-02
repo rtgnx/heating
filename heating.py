@@ -49,7 +49,6 @@ async def main():
 
           s = schedule[dev.name]
 
-          print(s)
           for window in s:
             now = datetime.now()
             start = now.replace(hour=window[0].hour, minute=window[0].minute)
