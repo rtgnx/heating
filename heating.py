@@ -1,7 +1,6 @@
 #!/usr/local/bin/python3
 import os
 import sys
-import time
 import json
 import click
 import asyncio
@@ -80,9 +79,11 @@ def cli(config):
       logging.error(f"Config file not found: {config}")
       sys.exit(1)
 
-    with open(config, "r") as fd:
-      schedule = json.load(fd)
+    schedule = json.loads(os.environ.get("SCHEDULE"))
 
+    if schedule is None:
+      with open(config, "r") as fd:
+        schedule = json.load(fd)
 
     for k, _ in schedule.items():
       schedule[k] = [(tparse(v[0]), tparse(v[1]) ) for v in schedule[k]]
