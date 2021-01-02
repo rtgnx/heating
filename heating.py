@@ -9,7 +9,7 @@ import logging
 
 from datetime import datetime
 
-EMAIL = os.environ.get('MEROSS_EMAIL') or "a.cybulski@protonmail.ch"
+EMAIL = os.environ.get('MEROSS_EMAIL')
 PASSWORD = os.environ.get('MEROSS_PASSWORD')
 
 from meross_iot.http_api import MerossHttpClient
