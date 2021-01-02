@@ -19,7 +19,7 @@ from meross_iot.manager import MerossManager
 def tparse(t):
   return datetime.strptime(t, "%H:%M")
 
-schedule = {}
+schedule = None
 
 
 
