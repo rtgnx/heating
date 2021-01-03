@@ -20,6 +20,30 @@ def tparse(t):
 
 schedule = None
 
+async def check_device_schedule(dev):
+  print(f"[+] Checking Schedule for: {dev.name}")
+  await dev.async_update()
+
+  if dev.name not in schedule.keys():
+    logging.info(f'[-] Device {dev.name} not in schedule')
+    return False
+
+  s = schedule[dev.name]
+
+  for window in s:
+    now = datetime.now()
+    start = now.replace(hour=window[0].hour, minute=window[0].minute)
+    end = now.replace(hour=window[1].hour, minute=window[1].minute)
+
+    logging.info(f"Time now: {now}\tSchedule Start: {start}\t Schedule End: {end}")
+
+    if now > start and now < end:
+      logging.info(f"[+] Turning {dev.name} on")
+      await dev.async_turn_on(channel=0)
+      return True
+
+    logging.info(f"[-] Turning {dev.name} off")
+    await dev.async_turn_off(channel=0)
 
 
 async def main():
@@ -41,31 +65,7 @@ async def main():
         # Note that channel argument is optional for MSS310 as they only have one channel
 
         for dev in plugs:
-          print(f"[+] Checking Schedule for: {dev.name}")
-          await dev.async_update()
-          if dev.name not in schedule.keys():
-            logging.info(f'[-] Device {dev.name} not in schedule')
-            continue
-
-          s = schedule[dev.name]
-
-          for window in s:
-            now = datetime.now()
-            start = now.replace(hour=window[0].hour, minute=window[0].minute)
-            end = now.replace(hour=window[1].hour, minute=window[1].minute)
-
-            logging.info(f"Time now: {now}\tSchedule Start: {start}\t Schedule End: {end}")
-
-            if now > start and now < end:
-              logging.info(f"[+] Turning {dev.name} on")
-              await dev.async_turn_on(channel=0)
-              break
-
-            logging.info(f"[-] Turning {dev.name} off")
-
-            await dev.async_turn_off(channel=0)
-
-
+          check_device_schedule(dev)
 
     # Close the manager and logout from http_api
     manager.close()
