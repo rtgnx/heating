@@ -8,6 +8,6 @@ steps:
       username: nologin
       password:
         from_secret: RG_SECRET
-      registry: rg.nl-ams.scw.cloud
+      registry: rg.nl-ams.scw.cloud/revlabs
       repo: rg.nl-ams.scw.cloud/revlabs/heating
       tags: latest
