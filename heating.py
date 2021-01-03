@@ -81,9 +81,9 @@ def cli(config):
       logging.error(f"Config file not found: {config}")
       sys.exit(1)
 
-    schedule = json.loads(os.environ.get("SCHEDULE"))
-
-    if schedule is None:
+    try:
+      schedule = json.loads(os.environ.get("SCHEDULE"))
+    except:
       with open(config, "r") as fd:
         schedule = json.load(fd)
 

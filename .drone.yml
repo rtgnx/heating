@@ -7,3 +7,8 @@ steps:
     commands:
       - pip install meross-iot click
       - python heating.py
+    environment:
+        MEROSS_EMAIL:
+          from_secret: MEROSS_EMAIL
+        MEROSS_PASSWORD:
+          from_secret: MEROSS_PASSWORD
