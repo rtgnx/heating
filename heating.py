@@ -65,7 +65,7 @@ async def main():
         # Note that channel argument is optional for MSS310 as they only have one channel
 
         for dev in plugs:
-          check_device_schedule(dev)
+          await check_device_schedule(dev)
 
     # Close the manager and logout from http_api
     manager.close()
