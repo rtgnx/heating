@@ -2,6 +2,15 @@ kind: pipeline
 name: Build
 
 steps:
+  - name: build
+    image: docker
+    volumes:
+      - name: docker_sock
+        path: /var/run/docker.sock:/var/run/docker.sock
+    commands:
+      - docker build -t rg.nl-ams.scw.cloud/revlabs/heating:latest .
+      - docker push rg.nl-ams.scw.cloud/revlabs/heating:latest
+
   - name: docker  
     image: plugins/docker
     settings:
