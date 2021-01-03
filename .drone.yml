@@ -3,6 +3,7 @@ name: Build
 
 steps:
   - name: build
+    privileged: true
     image: docker
     volumes:
       - name: docker_sock
