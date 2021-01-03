@@ -4,10 +4,12 @@ name: Build
 steps:
   - name: Build image
     image: docker:latest
+    privileged: true
     volumes:
-      - name: docker_sock
-        host:
-          path: /var/run/docker.sock
+      - name: docker_run
+        path: /var/run/
+      - name: lib
+        path: /var/lib/docker
     commands:
       - docker build --no-cache -t rg.nl-ams.scw.cloud/revlabs/heating:latest .
       - docker push rg.nl-ams.scw.cloud/revlabs/heating:latest
