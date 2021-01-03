@@ -2,19 +2,12 @@ kind: pipeline
 name: Build
 
 steps:
-
   - name: Build image
     image: docker:latest
     volumes:
       - name: docker_sock
-        path: /var/run/docker.sock
+        host:
+          path: /var/run/docker.sock
     commands:
       - docker build --no-cache -t rg.nl-ams.scw.cloud/revlabs/heating:latest .
-    
-  - name: Push Image
-    image: docker:latest
-    volumes:
-      - name: docker_sock
-        path: /var/run/docker.sock
-    commands:
       - docker push rg.nl-ams.scw.cloud/revlabs/heating:latest
