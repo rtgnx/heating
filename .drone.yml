@@ -2,22 +2,8 @@ kind: pipeline
 name: Build
 
 steps:
-  - name: build
-    privileged: true
-    image: docker
-    volumes:
-      - name: docker_sock
-        path: /var/run/docker.sock:/var/run/docker.sock
+  - name: Run
+    image: python:3.9
     commands:
-      - docker build -t rg.nl-ams.scw.cloud/revlabs/heating:latest .
-      - docker push rg.nl-ams.scw.cloud/revlabs/heating:latest
-
-  - name: docker  
-    image: plugins/docker
-    settings:
-      username: nologin
-      password:
-        from_secret: RG_SECRET
-      registry: rg.nl-ams.scw.cloud/revlabs
-      repo: rg.nl-ams.scw.cloud/revlabs/heating
-      tags: latest
+      - pip install meross-iot click
+      - python heating.py
