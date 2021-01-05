@@ -42,8 +42,8 @@ async def check_device_schedule(dev):
       await dev.async_turn_on(channel=0)
       return True
 
-    logging.info(f"[-] Turning {dev.name} off")
-    await dev.async_turn_off(channel=0)
+  logging.info(f"[-] Turning {dev.name} off")
+  await dev.async_turn_off(channel=0)
 
 
 async def main():
