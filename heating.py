@@ -11,6 +11,7 @@ from datetime import datetime
 
 EMAIL = os.environ.get('MEROSS_EMAIL')
 PASSWORD = os.environ.get('MEROSS_PASSWORD')
+SCHEDULE_URL = os.environ.get('SCHEDULE_URL')
 
 from meross_iot.http_api import MerossHttpClient
 from meross_iot.manager import MerossManager
@@ -78,7 +79,7 @@ def cli():
     global schedule
 
     try:
-      res = r.get('https://revlabs.s3.nl-ams.scw.cloud/etc/config.json')
+      res = r.get(SCHEDULE_URL)
       if res.status_code != 200:
         sys.exit(1)
       schedule = json.loads(res.content)

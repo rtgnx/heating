@@ -12,3 +12,5 @@ steps:
           from_secret: MEROSS_EMAIL
         MEROSS_PASSWORD:
           from_secret: MEROSS_PASSWORD
+        SCHEDULE_URL:
+          from_secret: SCHEDULE_URL
