@@ -74,7 +74,7 @@ async def main():
 
 
 @click.command()
-def cli(config):
+def cli():
     global schedule
 
     try:
