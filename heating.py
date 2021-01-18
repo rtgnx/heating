@@ -5,6 +5,7 @@ import json
 import click
 import asyncio
 import logging
+import requests as r
 
 from datetime import datetime
 
@@ -73,19 +74,16 @@ async def main():
 
 
 @click.command()
-@click.option("--config", default='./config.json', help="Schedule file (Yaml)")
 def cli(config):
     global schedule
 
-    if not os.path.isfile(config):
-      logging.error(f"Config file not found: {config}")
-      sys.exit(1)
-
     try:
-      schedule = json.loads(os.environ.get("SCHEDULE"))
+      res = r.get('https://revlabs.s3.nl-ams.scw.cloud/etc/config.json')
+      if res.status_code != 200:
+        sys.exit(1)
+      schedule = json.loads(res.content)
     except:
-      with open(config, "r") as fd:
-        schedule = json.load(fd)
+      sys.exit(1)
 
     for k, _ in schedule.items():
       schedule[k] = [(tparse(v[0]), tparse(v[1]) ) for v in schedule[k]]

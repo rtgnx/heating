@@ -5,7 +5,7 @@ steps:
   - name: Run
     image: python:3.9
     commands:
-      - pip install meross-iot click
+      - pip install meross-iot click requests
       - python heating.py
     environment:
         MEROSS_EMAIL:
