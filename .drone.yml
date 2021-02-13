@@ -14,3 +14,15 @@ steps:
           from_secret: MEROSS_PASSWORD
         SCHEDULE_URL:
           from_secret: SCHEDULE_URL
+
+  - name: Build image and publish
+    image: plugins/docker
+    settings:
+      repo: rg.nl-ams.scw.cloud/revlabs/heating
+      username: nologin
+      password:
+        from_secret: SCW_SECRET_KEY
+      registry: rg.nl-ams.scw.cloud/revlabs
+    when:
+      branch:
+        - master
